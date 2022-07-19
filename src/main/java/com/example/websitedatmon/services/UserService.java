@@ -1,5 +1,6 @@
 package com.example.websitedatmon.services;
 
+import com.example.websitedatmon.domain.Role;
 import com.example.websitedatmon.domain.User;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,7 @@ import java.util.List;
 public interface UserService {
     User save(User user);
     User findUserById(int id);
+
     User findUserByEmail(String email);
     User findUserByEmailAndPassword(String email,String password);
     User findUserByUserNameAndPassword(String userName,String password);

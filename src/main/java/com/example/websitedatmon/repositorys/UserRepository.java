@@ -1,5 +1,6 @@
 package com.example.websitedatmon.repositorys;
 
+import com.example.websitedatmon.domain.Role;
 import com.example.websitedatmon.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -13,9 +14,10 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User,Integer> {
     User findUserById(int id);
     User findUserByEmail(String email);
+
     User findUserByEmailAndPassword(String email,String password);
     User findUserByUserNameAndPassword(String userName,String password);
-    @Query(value = "SELECT * from  user  WHERE role_id = 1 ",nativeQuery = true)
+    @Query(value = "SELECT * from  user  WHERE role_id = 3 ",nativeQuery = true)
     List<User> listEmployee();
 
     @Query(value = "SELECT * from  user  WHERE role_id = 2 ",nativeQuery = true)

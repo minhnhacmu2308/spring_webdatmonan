@@ -1,5 +1,6 @@
 package com.example.websitedatmon.serviceImpls;
 
+import com.example.websitedatmon.domain.Role;
 import com.example.websitedatmon.domain.User;
 import com.example.websitedatmon.repositorys.UserRepository;
 import com.example.websitedatmon.services.UserService;
@@ -18,6 +19,8 @@ public class UserServiceImpl implements UserService {
     public User save(User user) {
         return userRepository.save(user);
     }
+
+
 
     @Override
     public User findUserById(int id) {

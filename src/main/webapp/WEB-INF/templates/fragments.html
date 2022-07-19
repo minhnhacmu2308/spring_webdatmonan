@@ -23,11 +23,11 @@
 <body class="sb-nav-fixed">
     <nav th:fragment="html_nav" class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="/admin/home">QUẢN TRỊ</a>
+    <a class="navbar-brand ps-3" href="/user/home">QUẢN TRỊ</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
             class="fas fa-bars"></i></button>
-
+        <p  style="color:white;margin-top:15px" th:text="'Hôm nay ngày ' + ${#dates.format(#dates.createNow(),'dd-MM-YYYY')}"></p>
     <!-- Navbar Search-->
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
 
@@ -36,9 +36,9 @@
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-               aria-expanded="false"><i class="fas fa-user fa-fw"></i><span></span></a>
+               aria-expanded="false"><i class="fas fa-user fa-fw"></i><span th:text="${session.user.fullName}"></span></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown1">
-                <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
             </ul>
         </li>
     </ul>
@@ -48,44 +48,46 @@
         <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
                 <div class="nav">
-
-                    <a class="nav-link" href="/admin/home">
+                    <a class="nav-link" href="/user/home">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                         Bảng điều khiển
                     </a>
-                    <a class="nav-link" href="/admin/product">
+                    <a th:if="${session.user.role.id == 1}" class="nav-link" href="/user/employee">
                         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                        Sản phẩm
+                        Quản lý nhân viên
                     </a>
-                    <a class="nav-link" href="/admin/category">
+                    <a th:if="${session.user.role.id == 1}" class="nav-link" href="/user/company">
                         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                        Danh mục sản phẩm
+                        Thông tin công ty
                     </a>
-                    <a class="nav-link" href="/admin/employee">
+                    <a th:if="${session.user.role.id == 1}" class="nav-link" href="/user/post">
                         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                        Tài khoản quản trị
+                        Quản lý tin tức
                     </a>
-                    <a class="nav-link" href="/admin/customer">
+                    <a th:if="${session.user.role.id == 1}" class="nav-link" href="/user/feedback">
                         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                        Khách hàng
+                       Quản lý góp ý
                     </a>
-                    <a class="nav-link" href="/admin/order">
+                    <a th:if="${session.user.role.id == 2}" class="nav-link" href="/user/food">
                         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                        Đơn hàng
+                        Quản lý món ăn
                     </a>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                       data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                        Thống kê
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    <a th:if="${session.user.role.id == 2}" class="nav-link" href="/user/menu">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Tạo thực đơn
                     </a>
-                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
-                         data-bs-parent="#sidenavAccordion">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="/admin/seller">Bán chạy nhất </a>
-                            <a class="nav-link" href="/admin/notsell">Không bán chạy</a>
-                        </nav>
-                    </div>
+                    <a th:if="${session.user.role.id != 1}" class="nav-link" href="/user/newpost">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Tin tức, thông báo
+                    </a>
+                    <a th:if="${session.user.role.id == 3}" class="nav-link" href="/user/send">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Gửi góp ý
+                    </a>
+                    <a th:if="${session.user.role.id == 3}" class="nav-link" href="/user/menu">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Xem thực đơn
+                    </a>
                 </div>
             </div>
 
@@ -93,48 +95,6 @@
     </div>
     <div id="layoutSidenav_content">
         <main>
-            <div class="container-fluid px-4">
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active"></li>
-                </ol>
-                <div class="row">
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-primary text-white mb-4">
-                            <div class="card-body">5 Phim đang chiếu</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-warning text-white mb-4">
-                            <div class="card-body">7 Phim sắp chiếu</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-success text-white mb-4">
-                            <div class="card-body">12 Khách hàng</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-danger text-white mb-4">
-                            <div class="card-body">5 Booking chưa xử lý</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
         </main>
         <footer th:fragment="footer" class="py-4 bg-light mt-auto">
