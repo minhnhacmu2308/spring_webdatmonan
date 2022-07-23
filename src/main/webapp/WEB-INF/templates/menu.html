@@ -71,10 +71,10 @@
                 <th>STT</th>
                 <th>Tên món ăn</th>
                 <th>Ảnh</th>
+                <th></th>
               </tr>
               </thead>
               <tbody>
-              <input type="hidden" th:value="${list.size()}" id="dodai" />
               <th:block th:each="category,index  : ${list}">
                 <tr>
                   <td th:text="${index.index +1}"></td>
@@ -82,7 +82,39 @@
                   <td>
                     <img height="200px" width="200px" th:if="${category.food.image}" th:src="${'/resources/uploads/'}+${category.food.image}">
                   </td>
+                  <td th:if="${session.user.role.id == 3}">
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                            th:data-bs-target="'#idModelDel'+${category.id}" >
+                      Order món ăn
+                    </button>
+                    <div class="modal fade" th:id="'idModelDel' + ${category.id}" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Order</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            Bạn muốn order món : <span th:text="${category.food.name}"></span>
+                            <form th:action="@{/user/menu-order}" method="post">
+                              <input type="hidden" class="form-control" id="id" name="id" th:value="${category.food.id}">
+                              <div class="modal-footer" style="margin-top: 20px">
+                                <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">
+                                  Close
+                                </button>
+                                <button type="submit" class="btn btn-warning">Order</button>
 
+                              </div>
+                            </form>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </td>
               </th:block>
               </tbody>
             </table>

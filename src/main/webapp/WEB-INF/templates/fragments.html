@@ -72,6 +72,11 @@
                         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                         Quản lý món ăn
                     </a>
+                    <a th:if="${session.user.role.id == 2}" class="nav-link" href="/user/order">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Quản lý order
+                    </a>
+
                     <a th:if="${session.user.role.id == 2}" class="nav-link" href="/user/menu">
                         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                         Tạo thực đơn
@@ -87,6 +92,10 @@
                     <a th:if="${session.user.role.id == 3}" class="nav-link" href="/user/menu">
                         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                         Xem thực đơn
+                    </a>
+                    <a th:if="${session.user.role.id == 3}" class="nav-link" href="/user/history">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Lịch sử order
                     </a>
                 </div>
             </div>
