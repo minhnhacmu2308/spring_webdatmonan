@@ -33,6 +33,7 @@
                                 <th>Ảnh</th>
                                 <th>Ngày order</th>
                                 <th>Tình trạng</th>
+                                <th>Hoạt động</th>
                             </tr>
                             </thead>
 
@@ -49,7 +50,40 @@
                                     <td th:if="${category.status == 0}">Đang chờ xử lý</td>
                                     <td th:if="${category.status == 1}">Đã hoàn thành</td>
                                     <td th:if="${category.status == 2}">Đã nhận món</td>
+                                    <td th:if="${category.status == 2}">
+                                        <button th:if="${category.status == 2}" style="width: 100px" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                  th:data-bs-target="'#exampleModal'+${category.id}">
+                                        Bình luận
+                                    </button></td>
                                 </tr>
+                                <!-- Modal Update-->
+                                <div class="modal fade" th:id="'exampleModal'+${category.id}" tabindex="-1"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Bình luận đơn hàng</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form th:action="@{/user/comment}" method="post" enctype="multipart/form-data" >
+                                                    <input type="hidden" name="food_id" th:value="${category.food.id}" class="form-control">
+                                                    <input type="hidden" name="user_id" th:value="${category.user.id}" class="form-control">
+                                                    <div class="mb-5">
+                                                        <label  class="col-form-label">Bình luận đánh giá:</label>
+                                                        <textarea class="form-control" name="content" type="text" cols="4"  ></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" style="width:100px" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                        <button type="submit" style="width:100px" class="btn btn-primary">Gửi</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </th:block>
                             </tbody>
                         </table>
